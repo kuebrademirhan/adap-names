@@ -76,7 +76,7 @@ export class StringName implements Name {
     }
 
     public asDataString(): string {
-        return this.name;
+        return this.asString(DEFAULT_DELIMITER);
     }
 
     public getDelimiterCharacter(): string {

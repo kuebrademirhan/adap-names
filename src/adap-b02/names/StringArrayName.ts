@@ -72,7 +72,7 @@ export class StringArrayName implements Name {
     }
 
     public remove(i: number): void {
-        if (i < 0 || i > this.components.length) {
+        if (i < 0 || i >= this.components.length) {
             throw new Error(`Index is out of bounds`);
         }
         this.components.splice(i,1);
