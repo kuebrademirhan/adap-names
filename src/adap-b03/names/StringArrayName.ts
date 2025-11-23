@@ -2,68 +2,65 @@ import { DEFAULT_DELIMITER, ESCAPE_CHARACTER } from "../common/Printable";
 import { Name } from "./Name";
 import { AbstractName } from "./AbstractName";
 
-export class StringArrayName extends AbstractName {
+export class StringArrayName extends AbstractName implements Name {
 
     protected components: string[] = [];
 
     constructor(source: string[], delimiter?: string) {
-        super();
-        throw new Error("needs implementation or deletion");
+       super(delimiter); // Call super constructor
+       this.components = [...source];
     }
 
-    public clone(): Name {
-        throw new Error("needs implementation or deletion");
-    }
-
-    public asString(delimiter: string = this.delimiter): string {
-        throw new Error("needs implementation or deletion");
-    }
-
-    public asDataString(): string {
-        throw new Error("needs implementation or deletion");
-    }
-
-    public isEqual(other: Name): boolean {
-        throw new Error("needs implementation or deletion");
-    }
-
-    public getHashCode(): number {
-        throw new Error("needs implementation or deletion");
-    }
-
-    public isEmpty(): boolean {
-        throw new Error("needs implementation or deletion");
-    }
-
-    public getDelimiterCharacter(): string {
-        throw new Error("needs implementation or deletion");
-    }
+    // --- AbstractName Implementations (Minimal Interface) ---
 
     public getNoComponents(): number {
-        throw new Error("needs implementation or deletion");
+        return this.components.length;
     }
 
     public getComponent(i: number): string {
-        throw new Error("needs implementation or deletion");
+        if (i < 0 || i >= this.components.length) {
+            throw new Error(`Index is out of bounds`);
+        }
+        return this.components[i];
+    }
+    
+   
+
+    public setComponent(i: number, c: string): void {
+       if (i < 0 || i >= this.components.length) {
+            throw new Error(`Index is out of bounds`);
+        }
+        this.components[i] = c;
     }
 
-    public setComponent(i: number, c: string) {
-        throw new Error("needs implementation or deletion");
+    public insert(i: number, c: string): void {
+        if (i < 0 || i > this.components.length) {
+            throw new Error(`Index is out of bounds`);
+        }
+        this.components.splice(i, 0, c);
     }
 
-    public insert(i: number, c: string) {
-        throw new Error("needs implementation or deletion");
+    public append(c: string): void {
+        this.components.push(c);
     }
 
-    public append(c: string) {
-        throw new Error("needs implementation or deletion");
-    }
-
-    public remove(i: number) {
-        throw new Error("needs implementation or deletion");
+    public remove(i: number): void {
+        if (i < 0 || i >= this.components.length) {
+            throw new Error(`Index is out of bounds`);
+        }
+        this.components.splice(i,1);
     }
 
     public concat(other: Name): void {
-        throw new Error("needs implementation or deletion");
+        for (let i = 0; i < other.getNoComponents(); i++) {
+            // Retrieve raw component from other Name
+            this.components.push(other.getComponent(i));
+        }
+    }
+
+   
+
+    public clone(): Name {
+        return new StringArrayName(this.components, this.delimiter); 
     }
 }
